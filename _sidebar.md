@@ -12,4 +12,13 @@
   * [RabbitMQ学习笔记](./docs/mq.md)
 * 数据库
   * [MySQL学习笔记](./docs/MySQL.md)
-       
+* 算法资源
+  * [剑指offer](./docs/算法题笔记/剑指offer算法整理.md)
+  * [排列组合问题](./docs/算法题笔记/排列组合问题.md)
+  * [生产者消费者模型写法](./docs/算法题笔记/生产者消费者模型写法.md) 
+  * [线程同步写法](./docs/算法题笔记/线程同步写法.md)
+  * [leetcode-头条](./docs/算法题笔记/leetcode-头条.md) 
+  * [leetcode-猿题库](./docs/算法题笔记/leetcode-猿题库.md) 
+  * [leetcode-老虎证券](./docs/算法题笔记/leetcode-老虎证券.md) 
+  * [二叉树遍历](./docs/算法题笔记/二叉树遍历.md)
+   
