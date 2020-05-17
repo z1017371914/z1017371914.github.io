@@ -5,7 +5,7 @@
 <h1 align="center">胡雪松的博客</h1>
 
 [常用资源](https://shimo.im/docs/MuiACIg1HlYfVxrj/)
-[GitHub](https://github.com/1017371914/lear)
+[GitHub](https://github.com/1017371914/learn)
 [开始阅读](README.md)
 
 
