@@ -6,7 +6,7 @@
 
 [常用资源](https://shimo.im/docs/MuiACIg1HlYfVxrj/)
 [GitHub](https://github.com/1017371914/lear)
-[开始阅读](#docsify-demo)
+[开始阅读](#javaguide-interview)
 
 
 
