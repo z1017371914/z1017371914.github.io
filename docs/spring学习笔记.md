@@ -12,9 +12,7 @@
 
 ### [AOP](https://shimo.im/docs/Nj0bcFUy3SYyYnbI/)
 
-### [java学习录Spring源码](https://mp.weixin.qq.com/s/PoQeVQ8x3DJhzswhUJl5xw)
-
-
+[spring官方文档](https://github.com/DocsHome/spring-docs/blob/master/pages/core/overview.md)
 
 ## 类图
 
@@ -104,8 +102,7 @@ public class TulingCondition implements Condition{
     
     public boolean isSingleton(){
       return true;
-    }
-      
+    }  
   }
   ```
 
@@ -128,17 +125,19 @@ public class TulingCondition implements Condition{
   * BeanDefinitionRegistryPostProcessor 这个在扫描之前可以向容器中添加beanDefinition
 
   * 初始化容器
-  * 加载BeanFactoryPostProcessor实现类 (BeanDefinitionRegistryPostProcessor子接口，调用在这个之前)
+  * 加载BeanFactoryPostProcessor实现类 (BeanDefinitionRegistryPostProcessor子接口，调用在这个之前) 
   * 执行BeanFactoryPostProcessor.postProcessBeanFactory方法（主要是用来自定义修改持有的beandefinition）
 
 * 创建 和 初始化 (postcontruct和init指向同一个方法，只会执行一次)
 
   * Aware接口相关
+  * 这里做注入
   * BeanPostProcessor.postProcessBeforeInitialization 
   * JSR250 @PostConstruct
   * InitializingBean接口 afterPropertiesSet()方法
   * 指定的init方法         
   * BeanPostProcessor.postProcessAfterInitialization
+  * AOP代理
   
 * 销毁  ( 如果是prototype 模式，那么不受spring容器管理）
 
@@ -329,6 +328,8 @@ Eureka 借用的smartLifeCycle的知识
 
 ## mybatis和spring整合的原理
 
+
+
 ## [spring bean的初始化过程](https://blog.csdn.net/java_lyvee/article/details/102633067)
 
 >ConfigurationClassPostProcessor
@@ -462,3 +463,11 @@ public class Config{
 ## 推断构造函数
 
 ![](https://tva1.sinaimg.cn/large/007S8ZIlly1gele76jpzsj30o607idk2.jpg)
+
+## [refresh](https://blog.csdn.net/const_/article/details/104952661)
+
+* preparerefresh() 
+
+  记录启动时间和 标志位
+
+https://blog.csdn.net/qq_29310729/article/details/106376587

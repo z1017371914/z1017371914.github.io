@@ -175,7 +175,7 @@ public class Solution {
 
 > 一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
 
-```
+```java
 public class Solution {
     public int JumpFloorII(int target) {
            if(target == 1){
@@ -263,7 +263,7 @@ public class Solution {
         }
         
         if(list1.val < list2.val){
-            list1.next = this.Merge(list1.next,list2);
+            l ist1.next = this.Merge(list1.next,list2);
             return list1;
         }else{
             list2.next = this.Merge(list1,list2.next);
@@ -2147,5 +2147,401 @@ public class Solution {
         }
     }
 }
+```
+
+
+##  有向图判断有环
+
+> 有向图判断有环用 拓扑排序， 一个数组记录入度，一个hashset数组 记录有几个边，把入度是0的边加入到队列里
+>
+> 无向图判断有环用 并查集
+
+```java
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Solution {
+
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        if (numCourses <= 0) {
+            return false;
+        }
+
+        // 特判
+        int pLen = prerequisites.length;
+        if (pLen == 0) {
+            return true;
+        }
+
+        int[] inDegree = new int[numCourses];
+        HashSet<Integer>[] adj = new HashSet[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            adj[i] = new HashSet<>();
+        }
+
+        for (int[] p : prerequisites) {
+            inDegree[p[0]]++;
+            adj[p[1]].add(p[0]);
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+
+        // 首先加入入度为 0 的结点
+        for (int i = 0; i < numCourses; i++) {
+            if (inDegree[i] == 0) {
+                queue.add(i);
+            }
+        }
+
+        // 记录已经出队的课程数量
+        int cnt = 0;
+        while (!queue.isEmpty()) {
+            Integer top = queue.poll();
+            cnt += 1;
+            // 遍历当前出队结点的所有后继结点
+            for (int successor : adj[top]) {
+                inDegree[successor]--;
+                if (inDegree[successor] == 0) {
+                    queue.add(successor);
+                }
+            }
+        }
+        return cnt == numCourses;
+    }
+}
+
+作者：liweiwei1419
+链接：https://leetcode-cn.com/problems/course-schedule/solution/tuo-bu-pai-xu-by-liweiwei1419/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+```
+
+## [406. 根据身高重建队列](https://leetcode-cn.com/problems/queue-reconstruction-by-height/)
+
+```java
+class Solution {
+   public int[][] reconstructQueue(int[][] people) {
+        if (0 == people.length || 0 == people[0].length)
+            return new int[0][0];
+         //按照身高降序 K升序排序 
+        Arrays.sort(people, new Comparator<int[]>() {
+            @Override   
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] == o2[0] ? o1[1] - o2[1] : o2[0] - o1[0];
+            }
+        });
+        List<int[]> list = new ArrayList<>();
+        //K值定义为 排在h前面且身高大于或等于h的人数 
+        //因为从身高降序开始插入，此时所有人身高都大于等于h
+        //因此K值即为需要插入的位置
+        for (int[] i : people) {
+            list.add(i[1], i);
+        }
+        return list.toArray(new int[list.size()][]);
+
+
+
+
+       
+```
+
+## k个一组翻转链表
+
+```java
+class Solution {
+  public ListNode reverseKGroup(ListNode head, int k) {
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+
+    ListNode pre = dummy;
+    ListNode end = dummy;
+
+    while (end.next != null) {
+        for (int i = 0; i < k && end != null; i++) end = end.next;
+        if (end == null) break;
+        ListNode start = pre.next;
+        ListNode next = end.next;
+        end.next = null;
+        pre.next = reverse(start);
+        start.next = next;
+        pre = start;
+
+        end = pre;
+    }
+    return dummy.next;
+}
+
+private ListNode reverse(ListNode head) {
+    ListNode pre = null;
+    ListNode curr = head;
+    while (curr != null) {
+        ListNode next = curr.next;
+        curr.next = pre;
+        pre = curr;
+        curr = next;
+    }
+    return pre;
+}
+ 
+}
+```
+
+
+
+## LRU 缓存机制
+
+```java
+class LRUCache {
+    private int size = 0;
+    private int capacity = 0;
+    private HashMap<Integer,ListNode> hash;
+
+    private ListNode dummyHead;
+    private ListNode dummyTail;
+
+    private static class ListNode{
+        private int key;
+        private int value;
+        private ListNode pre;
+        private ListNode next;
+    }
+
+
+
+    public LRUCache(int capacity) {
+        
+        dummyTail = new ListNode();
+        dummyHead.next = dummyTail;
+        dummyTail.pre = dummyHead;
+    }
+    
+    public int get(int key) {
+        
+        if(hash.containsKey(key) == false){
+            return -1;
+        }
+        ListNode node = hash.get(key);
+        node.pre.next = node.next;
+        node.next.pre = node.pre;
+
+        node.next = dummyHead.next;
+        dummyHead.next.pre = node;
+
+        dummyHead.next = node;
+        node.pre = dummyHead;
+        
+        if(size == 1){
+             System.out.println(dummyHead.next.value);
+        }
+
+        if(size == 2){
+             System.out.println(dummyHead.next.value+","+ dummyTail.pre.value);
+        }
+    
+        return node.value;
+    }
+    
+    public void put(int key, int value) {
+        if(hash.containsKey(key)){
+            hash.get(key).value = value;
+            
+            this.get(key);
+            return ;
+        }
+
+        if(size < capacity){
+            ListNode temp = new ListNode();
+            temp.value = value;
+            temp.key = key;
+
+            dummyTail.pre.next = temp;
+            temp.pre = dummyTail.pre;
+            
+            temp.next = dummyTail;
+            dummyTail.pre = temp;
+            size++;
+            
+        }else{
+          
+            dummyTail.pre.value = value;
+            hash.remove(dummyTail.pre.key);
+           
+            dummyTail.pre.key = key; 
+        }
+
+        hash.put(key,dummyTail.pre);
+        this.get(key);
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+```
+
+## 链表排序 快排
+
+```java
+public ListNode sortList(ListNode head) {
+    //采用快速排序
+   quickSort(head, null);
+   return head;
+}
+public static void quickSort(ListNode head, ListNode end) {
+    if (head != end) {
+        ListNode node = partion(head, end);
+        quickSort(head, node);
+        quickSort(node.next, end);
+    }
+}
+
+public static ListNode partion(ListNode head, ListNode end) {
+    ListNode p1 = head, p2 = head.next;
+
+    //走到末尾才停
+    while (p2 != end) {
+
+        //大于key值时，p1向前走一步，交换p1与p2的值
+        if (p2.val < head.val) {
+            p1 = p1.next;
+
+            int temp = p1.val;
+            p1.val = p2.val;
+            p2.val = temp;
+        }
+        p2 = p2.next;
+    }
+
+    //当有序时，不交换p1和key值
+    if (p1 != head) {
+        int temp = p1.val;
+        p1.val = head.val;
+        head.val = temp;
+    }
+    return p1;
+}
+```
+
+## 单链表归并
+
+```sql
+public ListNode sortList(ListNode head) {
+    //采用归并排序
+    if (head == null || head.next == null) {
+        return head;
+    }
+    //获取中间结点
+    ListNode mid = getMid(head);
+    ListNode right = mid.next;
+    mid.next = null;
+    //合并
+    return mergeSort(sortList(head), sortList(right));
+}
+
+/**
+ * 获取链表的中间结点,偶数时取中间第一个
+ *
+ * @param head
+ * @return
+ */
+private ListNode getMid(ListNode head) {
+    if (head == null || head.next == null) {
+        return head;
+    }
+    //快慢指针
+    ListNode slow = head, quick = head;
+    //快2步，慢一步
+    while (quick.next != null && quick.next.next != null) {
+        slow = slow.next;
+        quick = quick.next.next;
+    }
+    return slow;
+}
+
+/**
+ *
+ * 归并两个有序的链表
+ *
+ * @param head1
+ * @param head2
+ * @return
+ */
+private ListNode mergeSort(ListNode head1, ListNode head2) {
+    ListNode p1 = head1, p2 = head2, head;
+   //得到头节点的指向
+    if (head1.val < head2.val) {
+        head = head1;
+        p1 = p1.next;
+    } else {
+        head = head2;
+        p2 = p2.next;
+    }
+
+    ListNode p = head;
+    //比较链表中的值
+    while (p1 != null && p2 != null) {
+
+        if (p1.val <= p2.val) {
+            p.next = p1;
+            p1 = p1.next;
+            p = p.next;
+        } else {
+            p.next = p2;
+            p2 = p2.next;
+            p = p.next;
+        }
+    }
+    //第二条链表空了
+    if (p1 != null) {
+        p.next = p1;
+    }
+    //第一条链表空了
+    if (p2 != null) {
+        p.next = p2;
+    }
+    return head;
+}
+
+```
+
+
+
+## [leetcode 84 柱状图中最大的矩形](https://leetcode-cn.com/problems/largest-rectangle-in-histogram/)
+
+> 记录一下单调递增栈，如果当前遍历的节点比栈顶节点小，那么就找到了以当前栈顶为 左端点和高，并且找到的右端点为 当前遍历的i -1
+
+```java
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        // 这里为了代码简便，在柱体数组的头和尾加了两个高度为 0 的柱体。
+        int[] tmp = new int[heights.length + 2];
+        System.arraycopy(heights, 0, tmp, 1, heights.length); 
+        
+        Deque<Integer> stack = new ArrayDeque<>();
+        int area = 0;
+        for (int i = 0; i < tmp.length; i++) {
+            // 对栈中柱体来说，栈中的下一个柱体就是其「左边第一个小于自身的柱体」；
+            // 若当前柱体 i 的高度小于栈顶柱体的高度，说明 i 是栈顶柱体的「右边第一个小于栈顶柱体的柱体」。
+            // 因此以栈顶柱体为高的矩形的左右宽度边界就确定了，可以计算面积🌶️ ～
+            while (!stack.isEmpty() && tmp[i] < tmp[stack.peek()]) {
+                int h = tmp[stack.pop()];
+                area = Math.max(area, (i - stack.peek() - 1) * h);   
+            }
+            stack.push(i);
+        }
+
+        return area;
+    }
+}
+```
+
+## [718. 最长重复子数组](https://leetcode-cn.com/problems/maximum-length-of-repeated-subarray/)
+
+```
+
 ```
 

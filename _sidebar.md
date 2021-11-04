@@ -1,8 +1,9 @@
 * 面试  
-  * [经典面试整理](./docs/经典面试整理.md)
-  * [面试记录](./docs/胡雪松面试记录.md)
+  * [经典知识点整理](./docs/经典面试整理.md)
 * JVM
   * [JVM学习总结](./docs/JVM学习总结.md)
+* JUC
+  * [JUC](./docs/周阳面试笔记/JUC多线程及高并发.md)
 * SpringBoot
   * [SpringBoot学习笔记](./docs/SpringBoot笔记/Spring%20Boot笔记.md)
   * [其它SpringBoot相关](./docs/Springboot.md)
@@ -10,8 +11,9 @@
   * [Spring学习笔记](./docs/spring学习笔记.md) 
 * MQ
   * [RabbitMQ学习笔记](./docs/mq.md)
+  * [Kafka学习笔记](./docs/other/Kafka/Kafka基本术语.md)
 * 数据库
-  * [MySQL学习笔记](./docs/MySQL.md)
+  * [MySQL学习笔记](./docs/other/MySQL)
 * 算法资源
   * [剑指offer](./docs/算法题笔记/剑指offer算法整理.md)
   * [排列组合问题](./docs/算法题笔记/排列组合问题.md)
@@ -21,4 +23,5 @@
   * [leetcode-猿题库](./docs/算法题笔记/leetcode-猿题库.md) 
   * [leetcode-老虎证券](./docs/算法题笔记/leetcode-老虎证券.md) 
   * [二叉树遍历](./docs/算法题笔记/二叉树遍历.md)
-   
+  * [hotstar](./docs/算法题笔记/hotstar.md)
+  * [排序](./docs/算法题笔记/排序.md)
